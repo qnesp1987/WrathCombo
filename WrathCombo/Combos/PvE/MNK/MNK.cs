@@ -484,17 +484,20 @@ internal partial class MNK : Melee
             if (actionID is not (Bootshine or LeapingOpo or TrueStrike or RisingRaptor or SnapPunch or PouncingCoeurl))
                 return actionID;
 
-            if (IsEnabled(Preset.MNK_BC_OPOOPO))
+            if (MNK_BasicCombo[0] &&
+                actionID is Bootshine or LeapingOpo)
                 return OpoOpo is 0 && LevelChecked(DragonKick)
                     ? DragonKick
                     : OriginalHook(Bootshine);
 
-            if (IsEnabled(Preset.MNK_BC_RAPTOR))
+            if (MNK_BasicCombo[1] &&
+                actionID is TrueStrike or RisingRaptor)
                 return Raptor is 0 && LevelChecked(TwinSnakes)
                     ? TwinSnakes
                     : OriginalHook(TrueStrike);
 
-            if (IsEnabled(Preset.MNK_BC_COEURL))
+            if (MNK_BasicCombo[2] &&
+                actionID is SnapPunch or PouncingCoeurl)
                 return Coeurl is 0 && LevelChecked(Demolish)
                     ? Demolish
                     : OriginalHook(SnapPunch);
@@ -544,7 +547,7 @@ internal partial class MNK : Melee
                 return actionID;
 
             if (MNK_BH_RoF == 0 && ActionReady(RiddleOfFire) && IsOnCooldown(Brotherhood))
-                return RiddleOfFire;
+                return OriginalHook(RiddleOfFire);
 
             if (MNK_BH_RoF == 1 && ActionReady(Brotherhood) && IsOnCooldown(RiddleOfFire))
                 return Brotherhood;

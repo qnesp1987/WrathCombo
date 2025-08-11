@@ -860,13 +860,14 @@ internal partial class VPR : Melee
                 return actionID;
 
             //Reawaken combo
-            if (JustUsed(OriginalHook(SteelFangs)) && AnguineTribute is 4 ||
-                JustUsed(OriginalHook(ReavingFangs)) && AnguineTribute is 3 ||
-                JustUsed(OriginalHook(HuntersCoil)) && AnguineTribute is 2 ||
-                JustUsed(OriginalHook(SwiftskinsCoil)) && AnguineTribute is 1)
-                return OriginalHook(SerpentsTail);
-
-            return actionID;
+            return actionID switch
+            {
+                SteelFangs when JustUsed(OriginalHook(SteelFangs)) && AnguineTribute is 4 => OriginalHook(SerpentsTail),
+                ReavingFangs when JustUsed(OriginalHook(ReavingFangs)) && AnguineTribute is 3 => OriginalHook(SerpentsTail),
+                HuntersCoil when JustUsed(OriginalHook(HuntersCoil)) && AnguineTribute is 2 => OriginalHook(SerpentsTail),
+                SwiftskinsCoil when JustUsed(OriginalHook(SwiftskinsCoil)) && AnguineTribute is 1 => OriginalHook(SerpentsTail),
+                var _ => actionID
+            };
         }
     }
 
@@ -879,14 +880,18 @@ internal partial class VPR : Melee
             if (actionID is not (SteelFangs or ReavingFangs or SteelMaw or ReavingMaw))
                 return actionID;
 
-            if (OriginalHook(SerpentsTail) is DeathRattle && (JustUsed(FlankstingStrike) ||
-                                                              JustUsed(FlanksbaneFang) ||
-                                                              JustUsed(HindstingStrike) ||
-                                                              JustUsed(HindsbaneFang)) ||
-                OriginalHook(SerpentsTail) is LastLash && (JustUsed(JaggedMaw) || JustUsed(BloodiedMaw)))
-                return OriginalHook(SerpentsTail);
-
-            return actionID;
+            return actionID switch
+            {
+                SteelFangs or ReavingFangs when OriginalHook(SerpentsTail) is DeathRattle &&
+                                                (JustUsed(FlankstingStrike) ||
+                                                 JustUsed(FlanksbaneFang) ||
+                                                 JustUsed(HindstingStrike) ||
+                                                 JustUsed(HindsbaneFang)) => OriginalHook(SerpentsTail),
+                SteelMaw or ReavingMaw when OriginalHook(SerpentsTail) is LastLash &&
+                                            (JustUsed(JaggedMaw) ||
+                                             JustUsed(BloodiedMaw)) => OriginalHook(SerpentsTail),
+                var _ => actionID
+            };
         }
     }
 

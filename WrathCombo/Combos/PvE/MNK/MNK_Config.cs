@@ -96,6 +96,17 @@ internal partial class MNK
                     DrawAdditionalBoolChoice(MNK_Thunderclap_FieldMouseover,
                         "Add Field Mouseover", "Adds Field mouseover targetting");
                     break;
+
+                case Preset.MNK_ST_BeastChakras:
+                    DrawHorizontalMultiChoice(MNK_BasicCombo,
+                        "Opo-opo Option", "Replace Bootshine / Leaping Opo with Dragon Kick.", 3, 0);
+
+                    DrawHorizontalMultiChoice(MNK_BasicCombo,
+                        "Raptor Option", "Replace True Strike/Rising Raptor with Twin Snakes.", 3, 1);
+
+                    DrawHorizontalMultiChoice(MNK_BasicCombo,
+                        "Coeurl Option", "Replace Snap Punch/Pouncing Coeurl with Demolish.", 3, 2);
+                    break;
             }
         }
         #region Variables
@@ -118,6 +129,9 @@ internal partial class MNK
 
         public static UserBool
             MNK_Thunderclap_FieldMouseover = new("MNK_Thunderclap_FieldMouseover");
+
+        public static UserBoolArray
+            MNK_BasicCombo = new("MNK_BasicCombo");
 
         #endregion
     }

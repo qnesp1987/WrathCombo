@@ -808,12 +808,12 @@ internal partial class RPR : Melee
             bool soulsowReady = ActionReady(Soulsow) && !HasStatusEffect(Buffs.Soulsow);
 
             return soulSowOptions.Length > 0 &&
-                   (soulSowOptions[0] ||
-                    soulSowOptions[1] ||
-                    soulSowOptions[2] ||
-                    soulSowOptions[3] ||
-                    soulSowOptions[4]) && soulsowReady && !InCombat() ||
-                   IsEnabled(Preset.RPR_Soulsow_Combat) && !HasBattleTarget()
+                   (actionID is Harpe && soulSowOptions[0] ||
+                    actionID is Slice && soulSowOptions[1] ||
+                    actionID is SpinningScythe && soulSowOptions[2] ||
+                    actionID is ShadowOfDeath && soulSowOptions[3] ||
+                    actionID is BloodStalk && soulSowOptions[4]) && soulsowReady && !InCombat() ||
+                   IsEnabled(Preset.RPR_Soulsow_Combat) && actionID is Harpe && !HasBattleTarget()
                 ? Soulsow
                 : actionID;
         }
